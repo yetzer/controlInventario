@@ -13,7 +13,7 @@ namespace ControlInventario.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202410250004072_UpdateMigration"; }
+            get { return "202410250319325_UpdateMigration"; }
         }
         
         string IMigrationMetadata.Source

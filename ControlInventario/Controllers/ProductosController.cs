@@ -18,8 +18,9 @@ namespace ControlInventario.Controllers
         // GET: Productos
         public ActionResult Index()
         {
-            var productos = db.Productos.Include(p => p.Empresa);
-            return View(productos.ToList());
+            var productos = db.Productos.Include(p => p.Empresa).Include(c => c.Categorias);
+            var prod = productos.ToList();
+            return View(prod);
         }
 
         // GET: Productos/Details/5
@@ -40,8 +41,18 @@ namespace ControlInventario.Controllers
         // GET: Productos/Create
         public ActionResult Create()
         {
+            var categorias = db.Categorias.ToList();
+            var modelo = new ProductoViewModel
+            {
+                CategoriasDisponibles = categorias.Select(c => new SelectListItem
+                {
+                    Value = c.CategoriaId.ToString(),
+                    Text = c.Nombre
+                }).ToList()
+            };
+
             ViewBag.EmpresaNIT = new SelectList(db.Empresas, "NIT", "Nombre");
-            return View();
+            return View(modelo);
         }
 
         // POST: Productos/Create
@@ -49,10 +60,19 @@ namespace ControlInventario.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,Caracteristicas,Precio,EmpresaNIT")] Producto producto)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre,Caracteristicas,Precio,EmpresaNIT")] Producto producto, int[] categoriasSeleccionadas)
         {
             if (ModelState.IsValid)
             {
+                if (categoriasSeleccionadas != null)
+                {
+                    producto.Categorias = new List<Categoria>();
+                    foreach (var categoriaId in categoriasSeleccionadas)
+                    {
+                        var categoria = db.Categorias.Find(categoriaId);
+                        producto.Categorias.Add(categoria);
+                    }
+                }
                 db.Productos.Add(producto);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -74,19 +94,41 @@ namespace ControlInventario.Controllers
             {
                 return HttpNotFound();
             }
+
+            var categorias = db.Categorias.ToList();
+            var modelo = new ProductoViewModel
+            {
+                CategoriasDisponibles = categorias.Select(c => new SelectListItem
+                {
+                    Value = c.CategoriaId.ToString(),
+                    Text = c.Nombre
+                }).ToList()
+            };
+            modelo.Codigo = producto.Codigo;
+            modelo.Nombre = producto.Nombre;
+            modelo.Caracteristicas = producto.Caracteristicas;
+            modelo.Precio = producto.Precio;
             ViewBag.EmpresaNIT = new SelectList(db.Empresas, "NIT", "Nombre", producto.EmpresaNIT);
-            return View(producto);
+
+            return View(modelo);
         }
 
         // POST: Productos/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Caracteristicas,Precio,EmpresaNIT")] Producto producto)
+        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Caracteristicas,Precio,EmpresaNIT")] Producto producto, int[] categoriasSeleccionadas)
         {
             if (ModelState.IsValid)
             {
+                if (categoriasSeleccionadas != null)
+                {
+                    producto.Categorias = new List<Categoria>();
+                    foreach (var categoriaId in categoriasSeleccionadas)
+                    {
+                        var categoria = db.Categorias.Find(categoriaId);
+                        producto.Categorias.Add(categoria);
+                    }
+                }
                 db.Entry(producto).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

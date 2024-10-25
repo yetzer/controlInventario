@@ -41,9 +41,16 @@ namespace ControlInventario.Data
                 .HasMany(c => c.Empresas)
                 .WithMany(e => e.Clientes);
 
-            //modelBuilder.Entity<Producto>()
-            //    .HasMany(p => p.Empresas)
-            //    .WithMany(e => e.Productos);
+            modelBuilder.Entity<Producto>()
+            .HasMany(p => p.Categorias)
+            .WithMany(c => c.Productos)
+            .Map(m =>
+            {
+                m.ToTable("ProductoCategoria");
+                m.MapLeftKey("ProductoId");
+                m.MapRightKey("CategoriaId");
+            });
+
         }
     }
 }

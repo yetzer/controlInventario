@@ -220,9 +220,9 @@
     <Compile Include="Migrations\202410242225045_InitialCreate.Designer.cs">
       <DependentUpon>202410242225045_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202410250004072_UpdateMigration.cs" />
-    <Compile Include="Migrations\202410250004072_UpdateMigration.Designer.cs">
-      <DependentUpon>202410250004072_UpdateMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202410250319325_UpdateMigration.cs" />
+    <Compile Include="Migrations\202410250319325_UpdateMigration.Designer.cs">
+      <DependentUpon>202410250319325_UpdateMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -234,6 +234,7 @@
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\OrdenDetalle.cs" />
     <Compile Include="Models\Producto.cs" />
+    <Compile Include="Models\ProductoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -373,8 +374,8 @@
     <EmbeddedResource Include="Migrations\202410242225045_InitialCreate.resx">
       <DependentUpon>202410242225045_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202410250004072_UpdateMigration.resx">
-      <DependentUpon>202410250004072_UpdateMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202410250319325_UpdateMigration.resx">
+      <DependentUpon>202410250319325_UpdateMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<ControlInventario.Models.Producto>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Productos";
 }
 
-<h2>Index</h2>
+<h2>Productos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nuevo", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Empresa.Nombre)
+            Empresa
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
@@ -22,6 +22,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Precio)
+        </th>
+        <th>
+           Categorias
         </th>
         <th></th>
     </tr>
@@ -38,13 +41,23 @@
             @Html.DisplayFor(modelItem => item.Caracteristicas)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Precio)
+            @*@Html.DisplayFor(modelItem => item.Precio, "{0:C}")*@
+            @String.Format("{0:C}", item.Precio)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Codigo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Codigo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Codigo })
+            @foreach (var cat in item.Categorias)
+            {
+                @Html.DisplayFor(modelItem => cat.Nombre) 
+            }
+
         </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.Codigo }) |
+            @Html.ActionLink("Detalle", "Details", new { id = item.Codigo }) 
+            @*|
+            @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })*@
+        </td>
+        
     </tr>
 }
 

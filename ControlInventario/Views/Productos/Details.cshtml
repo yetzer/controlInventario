@@ -1,10 +1,10 @@
 ﻿@model ControlInventario.Models.Producto
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
     <h4>Producto</h4>
@@ -39,12 +39,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Precio)
+            @Html.DisplayFor(model => model.Precio, "{0:C}")
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Codigo }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Codigo }) |
+    @Html.ActionLink("<< Regresar", "Index")
 </p>
