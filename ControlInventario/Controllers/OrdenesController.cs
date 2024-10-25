@@ -11,6 +11,7 @@ using ControlInventario.Models;
 
 namespace ControlInventario.Controllers
 {
+    [Authorize]
     public class OrdenesController : Controller
     {
         private ControlInventarioContext db = new ControlInventarioContext();

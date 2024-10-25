@@ -8,17 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using ControlInventario.Data;
 using ControlInventario.Models;
+using ControlInventario.Services;
 
 namespace ControlInventario.Controllers
 {
+    [Authorize]
     public class EmpresasController : Controller
     {
-        private ControlInventarioContext db = new ControlInventarioContext();
-
+        
         // GET: Empresas
         public ActionResult Index()
         {
-            return View(db.Empresas.ToList());
+            var empresaService = new EmpresasService();
+            return View(empresaService.GetEmpresas());
         }
 
         // GET: Empresas/Details/5
@@ -28,7 +30,9 @@ namespace ControlInventario.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
+
+            var empresaService = new EmpresasService();
+            Empresa empresa = empresaService.GetEmpresa(id);
             if (empresa == null)
             {
                 return HttpNotFound();
@@ -43,16 +47,15 @@ namespace ControlInventario.Controllers
         }
 
         // POST: Empresas/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "NIT,Nombre,Direccion,Telefono")] Empresa empresa)
         {
+
             if (ModelState.IsValid)
             {
-                db.Empresas.Add(empresa);
-                db.SaveChanges();
+                var empresaService = new EmpresasService();
+                empresaService.CreateEmpresa(empresa);
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +69,8 @@ namespace ControlInventario.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
+            var empresaService = new EmpresasService();
+            Empresa empresa = empresaService.GetEmpresa(id);
             if (empresa == null)
             {
                 return HttpNotFound();
@@ -75,16 +79,14 @@ namespace ControlInventario.Controllers
         }
 
         // POST: Empresas/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "NIT,Nombre,Direccion,Telefono")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(empresa).State = EntityState.Modified;
-                db.SaveChanges();
+                var empresaService = new EmpresasService();
+                empresaService.UpdateEmpresa(empresa);
                 return RedirectToAction("Index");
             }
             return View(empresa);
@@ -97,7 +99,8 @@ namespace ControlInventario.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
+            var empresaService = new EmpresasService();
+            Empresa empresa = empresaService.GetEmpresa(id);
             if (empresa == null)
             {
                 return HttpNotFound();
@@ -110,19 +113,18 @@ namespace ControlInventario.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Empresa empresa = db.Empresas.Find(id);
-            db.Empresas.Remove(empresa);
-            db.SaveChanges();
+            var empresaService = new EmpresasService();
+            empresaService.DeleteEmpresa(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
