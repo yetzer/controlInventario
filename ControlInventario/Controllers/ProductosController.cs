@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Xml.Linq;
 using ControlInventario.Data;
 using ControlInventario.Models;
-using System.Net.Mail;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 
 namespace ControlInventario.Controllers
 {
@@ -134,37 +129,5 @@ namespace ControlInventario.Controllers
             }
             base.Dispose(disposing);
         }
-
-        public ActionResult DescargarInventarioPDF()
-        {
-            var productos = db.Productos.ToList();
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                Document document = new Document();
-                PdfWriter.GetInstance(document, ms);
-                document.Open();
-                document.Add(new Paragraph("Inventario de Productos"));
-                foreach (var producto in productos)
-                {
-                    document.Add(new Paragraph($"Producto: {producto.Nombre}, Precio: {producto.Precio}"));
-                }
-                document.Close();
-                return File(ms.ToArray(), "application/pdf", "Inventario.pdf");
-            }
-        }
-
-        public void EnviarCorreo(string emailDestino, byte[] pdf)
-        {
-            MailMessage mail = new MailMessage();
-            mail.To.Add(emailDestino);
-            mail.Subject = "Inventario de Productos";
-            mail.Body = "Adjunto el inventario.";
-            mail.Attachments.Add(new Attachment(new MemoryStream(pdf), "Inventario.pdf"));
-
-            SmtpClient smtp = new SmtpClient();
-            smtp.Send(mail);
-        }
-
     }
 }
