@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using ControlInventario.Data;
+using ControlInventario.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using ControlInventario.Data;
-using ControlInventario.Models;
 
 namespace ControlInventario.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class CategoriasController : Controller
     {
         private ControlInventarioContext db = new ControlInventarioContext();

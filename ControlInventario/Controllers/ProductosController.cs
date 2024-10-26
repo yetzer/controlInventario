@@ -11,7 +11,7 @@ using ControlInventario.Models;
 
 namespace ControlInventario.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class ProductosController : Controller
     {
         private ControlInventarioContext db = new ControlInventarioContext();
@@ -57,8 +57,6 @@ namespace ControlInventario.Controllers
         }
 
         // POST: Productos/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Codigo,Nombre,Caracteristicas,Precio,EmpresaNIT")] Producto producto, int[] categoriasSeleccionadas)

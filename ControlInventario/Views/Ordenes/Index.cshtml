@@ -1,21 +1,24 @@
 ﻿@model IEnumerable<ControlInventario.Models.Orden>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Ordenes";
 }
 
-<h2>Index</h2>
+<h2>Ordenes</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nueva orden", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Cliente.Nombre)
+            Cliente
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
         </th>
         <th></th>
     </tr>
@@ -29,9 +32,13 @@
             @Html.DisplayFor(modelItem => item.Fecha)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OrdenId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OrdenId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OrdenId })
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.OrdenId }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.OrdenId }) 
+            @*|
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrdenId })*@
         </td>
     </tr>
 }

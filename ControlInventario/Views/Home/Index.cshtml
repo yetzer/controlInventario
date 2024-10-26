@@ -6,26 +6,68 @@
     <section class="row" aria-labelledby="aspnetTitle">
         <h1 id="title">Inventario</h1>
         <p class="lead">Manejo inventario productos empresa.</p>
-   
+
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Empresas</h2>
-            <p>
-                Lleva control de las distintas empresas.
-            </p>
-            <p><a class="btn btn-outline-dark" href="/empresas">Ver &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Productos</h2>
-            <p>Administra los distintos productos y exporta tu inventario a PDF.</p>
-            <p><a class="btn btn-outline-dark" href="/productos">Ver &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Clientes</h2>
-            <p>Administra los distintos productos.</p>
-            <p><a class="btn btn-outline-dark" href="/clientes">Ver &raquo;</a></p>
-        </section>
-    </div>
+    @if (Request.IsAuthenticated)
+    {
+        if (User.IsInRole("Administrador"))
+        {
+            <div class="row">
+                <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+                    <h2 id="gettingStartedTitle">Empresas</h2>
+                    <p>
+                        Lleva control de las distintas empresas.
+                    </p>
+                    <p><a class="btn btn-outline-dark" href="/empresas">Ver &raquo;</a></p>
+                </section>
+                <section class="col-md-4" aria-labelledby="librariesTitle">
+                    <h2 id="librariesTitle">Productos</h2>
+                    <p>Administra los distintos productos y exporta tu inventario a PDF.</p>
+                    <p><a class="btn btn-outline-dark" href="/productos">Ver &raquo;</a></p>
+                </section>
+                <section class="col-md-4" aria-labelledby="hostingTitle">
+                    <h2 id="hostingTitle">Clientes</h2>
+                    <p>Administra los distintos productos.</p>
+                    <p><a class="btn btn-outline-dark" href="/clientes">Ver &raquo;</a></p>
+                </section>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+                    <h2 id="gettingStartedTitle">Ordenes</h2>
+                    <p>
+                        Lleva control de las distintas ordenes y pedidos.
+                    </p>
+                    <p><a class="btn btn-outline-dark" href="/Ordenes">Ver &raquo;</a></p>
+                </section>
+                <section class="col-md-4" aria-labelledby="librariesTitle">
+                    <h2 id="librariesTitle">Inventario</h2>
+                    <p>Conoce los distintos productos y exporta tu inventario a PDF.</p>
+                    <p><a class="btn btn-outline-dark" href="/Inventario">Ver &raquo;</a></p>
+                </section>
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="row">
+            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+                <h2 id="gettingStartedTitle">Ordenes</h2>
+                <p>
+                    Lleva control de las distintas ordenes y pedidos.
+                </p>
+                
+            </section>
+            <section class="col-md-4" aria-labelledby="librariesTitle">
+                <h2 id="librariesTitle">Inventario</h2>
+                <p>Conoce los distintos productos y exporta tu inventario a PDF.</p>
+                
+            </section>
+        </div>
+    }
+
 </main>

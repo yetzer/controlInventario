@@ -1,10 +1,8 @@
 ﻿using ControlInventario.Data;
 using ControlInventario.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
 namespace ControlInventario.Services
 {

@@ -11,7 +11,6 @@ using ControlInventario.Models;
 
 namespace ControlInventario.Controllers
 {
-    [Authorize]
     public class OrdenesController : Controller
     {
         private ControlInventarioContext db = new ControlInventarioContext();
@@ -46,11 +45,9 @@ namespace ControlInventario.Controllers
         }
 
         // POST: Ordenes/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrdenId,Fecha,ClienteId")] Orden orden)
+        public ActionResult Create([Bind(Include = "OrdenId,Fecha,Total,ClienteId")] Orden orden)
         {
             if (ModelState.IsValid)
             {
@@ -80,11 +77,9 @@ namespace ControlInventario.Controllers
         }
 
         // POST: Ordenes/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrdenId,Fecha,ClienteId")] Orden orden)
+        public ActionResult Edit([Bind(Include = "OrdenId,Fecha,Total,ClienteId")] Orden orden)
         {
             if (ModelState.IsValid)
             {

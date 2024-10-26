@@ -11,7 +11,7 @@ using ControlInventario.Models;
 
 namespace ControlInventario.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class ClientesController : Controller
     {
         private ControlInventarioContext db = new ControlInventarioContext();

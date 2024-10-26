@@ -12,7 +12,7 @@ using ControlInventario.Services;
 
 namespace ControlInventario.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class EmpresasController : Controller
     {
         
